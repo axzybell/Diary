@@ -13,7 +13,7 @@ namespace DiaryApp.Controllers
             //Dependency Injection (DI)
             //use db directly without defining it or injecting it, it would cause an error like:
             //The name 'db' does not exist in the current context
-                        _db = db;
+            _db = db;
         }
 
         public IActionResult Index()

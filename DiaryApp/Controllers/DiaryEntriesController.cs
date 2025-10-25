@@ -67,5 +67,33 @@ namespace DiaryApp.Controllers
 
             return View(diaryEntry);
         }
+
+        [HttpPost]
+        public IActionResult Edit(DiaryEntry obj)
+        {
+            if (obj != null && obj.Title.Length < 3)
+            {
+                ModelState.AddModelError("Title", "Title too short");
+            }
+
+            if (obj != null && obj.Content.Length < 10)
+            {
+                ModelState.AddModelError("Content", "Content is too short");
+            }
+
+            if (obj != null && obj.Content.Length > 500)
+            {
+                ModelState.AddModelError("Content", "Content is too Long");
+            }
+
+            if (ModelState.IsValid)
+            {
+                _db.DiaryEntries.Update(obj); //Update the new diary entry in the database
+                _db.SaveChanges(); //Saves the changes to the database
+                return RedirectToAction("Index");
+            }
+
+            return View(obj);
+        }
     }
 }
